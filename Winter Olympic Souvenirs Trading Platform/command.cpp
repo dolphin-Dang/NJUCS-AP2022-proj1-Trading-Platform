@@ -1,58 +1,13 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "command.h"
 #include <fstream>
 #include <string>
-#include <Windows.h>
 #include <iomanip>
 #include "print.h"
+#include "helpers.h"
 
 using namespace std;
-
-extern int find_comma(string s, int n);
-extern string get_time();
-extern void change_txt(string id, string txt, string inf, int n);
-
-string get_time_sec()
-{
-	string ret;
-	time_t now = time(0);
-	tm* ltm = localtime(&now);
-	ret = to_string(ltm->tm_hour) + ":" + to_string(ltm->tm_min) + ":" + to_string(ltm->tm_sec);
-
-	return ret;
-}
-
-//ÇÐ³öµÚn¸öcharºóµÄstring
-string cut(string s, int n,char c)
-{
-	string ret;
-	int space = 0;
-
-	for (int i = 0; i < s.length(); i++) {
-		if (s[i] == c) {
-			space++;		
-		}
-		if (space == n) {
-			if (n != 0) {
-				ret = s.substr(i + 1);
-			}
-			else {
-				ret = s;
-			}
-			break;
-		}
-	}
-	if (space < n)return "404";
-
-	for (int i = 0; i < ret.length(); i++) {
-		if (ret[i] == c) {
-			ret = ret.substr(0, i);
-			break;
-		}
-	}
-
-	return ret;
-}
+extern string choice;
 
 void Select(string s, char mode, string id = "*")
 {
@@ -72,14 +27,14 @@ void Select(string s, char mode, string id = "*")
 						<< '\t' << setw(20) << cut(firstline, 4, ',') << '\t' << setw(20) << cut(firstline, 5, ',') << endl;
 				}
 				cout << cut(lines, 0, ',') << '\t' << cut(lines, 1, ',') << '\t';
-				if (cut(lines, 3, ',') == "") cout << setw(20) << "ÎÞ" << '\t';
+				if (cut(lines, 3, ',') == "") cout << setw(20) << "æ— " << '\t';
 				else cout<< setw(20) << cut(lines, 3, ',') << '\t';
-				if (cut(lines, 4, ',') == "")cout << setw(20) << "ÎÞ" << '\t';
+				if (cut(lines, 4, ',') == "")cout << setw(20) << "æ— " << '\t';
 				else cout << setw(20) << cut(lines, 4, ',') << '\t';
 				cout << setw(20) << cut(lines, 5, ',') << endl;
 			}
 			if (!found) {
-				cout << "Î´ÕÒµ½ÈÎºÎÓÃ»§ÐÅÏ¢£¡" << endl;
+				cout << "æœªæ‰¾åˆ°ä»»ä½•ç”¨æˆ·ä¿¡æ¯ï¼" << endl;
 			}
 			cout << "*************************************************************************************" << endl;
 			cout << endl;
@@ -104,7 +59,7 @@ void Select(string s, char mode, string id = "*")
 					<< '\t' << cut(lines, 6, ',') << endl;
 			}
 			if (!found) {
-				cout << "Î´ÕÒµ½ÈÎºÎ¶©µ¥ÐÅÏ¢£¡" << endl;
+				cout << "æœªæ‰¾åˆ°ä»»ä½•è®¢å•ä¿¡æ¯ï¼" << endl;
 			}
 			cout << "********************************************************************************" << endl;
 			cout << endl;
@@ -131,7 +86,7 @@ void Select(string s, char mode, string id = "*")
 						<< cut(lines, 5, ',') << '\t' << cut(lines, 6, ',') << '\t' << cut(lines, 7, ',') << endl;
 				}
 				if (!found) {
-					cout << "Î´ÕÒµ½ÈÎºÎÉÌÆ·ÐÅÏ¢£¡" << endl;
+					cout << "æœªæ‰¾åˆ°ä»»ä½•å•†å“ä¿¡æ¯ï¼" << endl;
 				}
 				cout << "********************************************************************************" << endl;
 				cout << endl;
@@ -158,7 +113,7 @@ void Select(string s, char mode, string id = "*")
 					}
 				}
 				if (!found) {
-					cout << "Î´ÕÒµ½Ïà¹ØµÄÉÌÆ·£¡Çë³¢ÊÔÆäËûÊäÈëÐÎÊ½£¡¼´½«·µ»ØÖ÷½çÃæ¡£¡£¡£¡£¡£¡£" << endl;
+					cout << "æœªæ‰¾åˆ°ç›¸å…³çš„å•†å“ï¼è¯·å°è¯•å…¶ä»–è¾“å…¥å½¢å¼ï¼å³å°†è¿”å›žä¸»ç•Œé¢ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚" << endl;
 				}
 				cout << "********************************************************************************" << endl;
 				cout << endl;
@@ -189,7 +144,7 @@ void Select(string s, char mode, string id = "*")
 				}
 			}
 			if (!found) {
-				cout << "Äú»¹Ã»ÓÐÈÎºÎ¶©µ¥£¡" << endl;
+				cout << "æ‚¨è¿˜æ²¡æœ‰ä»»ä½•è®¢å•ï¼" << endl;
 			}
 			cout << "***************************************************************************" << endl;
 			cout << endl;
@@ -205,7 +160,7 @@ void Select(string s, char mode, string id = "*")
 				cout << "********************************************************************************" << endl;
 				getline(good, firstline);
 				while (getline(good, lines)) {
-					if (cut(lines, 7, ',') == "ÏúÊÛÖÐ") {
+					if (cut(lines, 7, ',') == "é”€å”®ä¸­") {
 						if (!found) {
 							found = true;
 							cout << cut(firstline, 0, ',') << '\t' << setw(10) << cut(firstline, 1, ',') << '\t' \
@@ -218,7 +173,7 @@ void Select(string s, char mode, string id = "*")
 					}
 				}
 				if (!found) {
-					cout << "Î´ÕÒµ½ÈÎºÎÔÚÊÛµÄÉÌÆ·ÐÅÏ¢£¡" << endl;
+					cout << "æœªæ‰¾åˆ°ä»»ä½•åœ¨å”®çš„å•†å“ä¿¡æ¯ï¼" << endl;
 				}
 				cout << "********************************************************************************" << endl;
 				cout << endl;
@@ -234,7 +189,7 @@ void Select(string s, char mode, string id = "*")
 				getline(good, firstline);
 				while (getline(good, lines)) {
 					if (lines.substr(0,4)==g_id) {
-						if (cut(lines, 7, ',') == "ÏúÊÛÖÐ") {
+						if (cut(lines, 7, ',') == "é”€å”®ä¸­") {
 							found = true;
 							cout << cut(firstline, 0, ',') << '\t' << setw(10) << cut(firstline, 1, ',') << '\t' \
 								<< cut(firstline, 2, ',') << '\t' << cut(firstline, 3, ',') << '\t' \
@@ -243,23 +198,23 @@ void Select(string s, char mode, string id = "*")
 								<< cut(lines, 2, ',') << '\t' << cut(lines, 3, ',') << '\t' \
 								<< cut(lines, 5, ',') << '\t' << cut(lines, 6, ',') << '\t' << cut(lines, 7, ',') << endl;
 						}
-						else if (cut(lines, 7, ',') == "ÒÑÏÂ¼Ü") {
-							cout << "¸ÃÉÌÆ·ÒÑÏÂ¼Ü!" << endl;
+						else if (cut(lines, 7, ',') == "å·²ä¸‹æž¶") {
+							cout << "è¯¥å•†å“å·²ä¸‹æž¶!" << endl;
 						}
-						else if (cut(lines, 7, ',') == "ÒÑÊÛÍê") {
-							cout << "¸ÃÉÌÆ·ÒÑÊÛÍê!" << endl;
+						else if (cut(lines, 7, ',') == "å·²å”®å®Œ") {
+							cout << "è¯¥å•†å“å·²å”®å®Œ!" << endl;
 						}
 						break;
 					}
 				}
 				if (!found) {
-					cout << "ÉÌÆ·ID²»´æÔÚ!" << endl;
+					cout << "å•†å“IDä¸å­˜åœ¨!" << endl;
 				}
 				cout << "********************************************************************************" << endl;
 				cout << endl;
 				good.close();
 			}
-			else if (txt == "Ãû³Æ") {
+			else if (txt == "åç§°") {
 				string g_name = cut(s, 7, ' ');
 				fstream good("commodity.txt");
 				string lines, firstline;
@@ -269,7 +224,7 @@ void Select(string s, char mode, string id = "*")
 				getline(good, firstline);
 				while (getline(good, lines)) {
 					if (cut(lines, 1, ',').find(g_name) != string::npos) {
-						if (cut(lines, 7, ',') == "ÏúÊÛÖÐ") {
+						if (cut(lines, 7, ',') == "é”€å”®ä¸­") {
 							if (!found) {
 								found = true;
 								cout << cut(firstline, 0, ',') << '\t' << setw(10) << cut(firstline, 1, ',') << '\t' \
@@ -283,7 +238,7 @@ void Select(string s, char mode, string id = "*")
 					}
 				}
 				if (!found) {
-					cout << "Î´ÕÒµ½Ïà¹ØµÄÉÌÆ·£¡Çë³¢ÊÔÆäËûÊäÈëÐÎÊ½£¡¼´½«·µ»ØÖ÷½çÃæ¡£¡£¡£¡£¡£¡£" << endl;
+					cout << "æœªæ‰¾åˆ°ç›¸å…³çš„å•†å“ï¼è¯·å°è¯•å…¶ä»–è¾“å…¥å½¢å¼ï¼å³å°†è¿”å›žä¸»ç•Œé¢ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚" << endl;
 				}
 				cout << "********************************************************************************" << endl;
 				cout << endl;
@@ -314,7 +269,7 @@ void Select(string s, char mode, string id = "*")
 				}
 			}
 			if (!found) {
-				cout << "Äú»¹Ã»ÓÐ·¢²¼ÈÎºÎÉÌÆ·£¡" << endl;
+				cout << "æ‚¨è¿˜æ²¡æœ‰å‘å¸ƒä»»ä½•å•†å“ï¼" << endl;
 			}
 			cout << "***************************************************************************" << endl;
 			cout << endl;
@@ -341,7 +296,7 @@ void Select(string s, char mode, string id = "*")
 				}
 			}
 			if (!found) {
-				cout << "Äú»¹Ã»ÓÐÈÎºÎ¶©µ¥£¡" << endl;
+				cout << "æ‚¨è¿˜æ²¡æœ‰ä»»ä½•è®¢å•ï¼" << endl;
 			}
 			cout << "***************************************************************************" << endl;
 			cout << endl;
@@ -355,7 +310,7 @@ void Update(string s, char mode)
 	int comma_num = 0, space_num = 0;
 	string good_id = s.substr(s.length() - 4);
 	string inf;
-	int five_space, six_space;//ÐÅÏ¢ÔÚµÚÎåµÚÁù¿Õ¸ñÖ®¼ä
+	int five_space, six_space;//ä¿¡æ¯åœ¨ç¬¬äº”ç¬¬å…­ç©ºæ ¼ä¹‹é—´
 	
 	for (int i = 0; i < s.length(); i++) {
 		if (s[i] == ' ') {
@@ -369,10 +324,10 @@ void Update(string s, char mode)
 	}
 	inf = s.substr(five_space + 1, six_space - five_space - 1);
 
-	if (s.substr(21, 4) == "¼Û¸ñ") {
+	if (s.substr(21, 4) == "ä»·æ ¼") {
 		comma_num = 2;
 	}
-	else if (s.substr(21, 4) == "ÃèÊö") {
+	else if (s.substr(21, 4) == "æè¿°") {
 		comma_num = 4;
 	}
 
@@ -381,7 +336,7 @@ void Update(string s, char mode)
 	}
 
 	cout << endl;
-	cout << "¡ª¡ª¡ª¡ª¡ª¡ªÐÞ¸Ä³É¹¦¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
+	cout << "â€”â€”â€”â€”â€”â€”ä¿®æ”¹æˆåŠŸâ€”â€”â€”â€”â€”â€”" << endl;
 
 }
 
@@ -410,7 +365,7 @@ void Insert(string s, char mode, string id = "*")
 			cout << "Open failed!";
 		}
 		else {
-			//ÓÃ»§ID
+			//ç”¨æˆ·ID
 			if (last_id == "") {
 				last_id = "M001";
 			}
@@ -422,22 +377,22 @@ void Insert(string s, char mode, string id = "*")
 				last_id[0] = 'M';
 			}
 
-			//"ÉÌÆ·ID,Ãû³Æ,¼Û¸ñ,ÊýÁ¿,ÃèÊö,Âô¼ÒID,ÉÏ¼ÜÊ±¼ä,ÉÌÆ·×´Ì¬"
+			//"å•†å“ID,åç§°,ä»·æ ¼,æ•°é‡,æè¿°,å–å®¶ID,ä¸Šæž¶æ—¶é—´,å•†å“çŠ¶æ€"
 
 			good << last_id << ',';
 
-			//Ãû³Æ ¼Û¸ñ ÊýÁ¿ ÃèÊö
-			good << s << ',' << id << "," << get_time() << "," << "ÏúÊÛÖÐ" << endl;
+			//åç§° ä»·æ ¼ æ•°é‡ æè¿°
+			good << s << ',' << id << "," << get_time() << "," << "é”€å”®ä¸­" << endl;
 
 		}
 		good.close();
 
 		cout << endl;
-		cout << "¡ª¡ª¡ª¡ª¡ª¡ª·¢²¼³É¹¦¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
+		cout << "â€”â€”â€”â€”â€”â€”å‘å¸ƒæˆåŠŸâ€”â€”â€”â€”â€”â€”" << endl;
 
 	}
 	else if (mode == 'b') {
-		//Ôö¼Ó¶©µ¥ÐÅÏ¢
+		//å¢žåŠ è®¢å•ä¿¡æ¯
 		for (int i = 0; i < s.length(); i++) {
 			if (s[i] == '(') {
 				s = s.substr(i + 1, s.length() - i - 2);
@@ -450,11 +405,11 @@ void Insert(string s, char mode, string id = "*")
 			exit(-1);
 		}
 		else {
-			order << s << ",·ñ" << endl;
+			order << s << ",å¦" << endl;
 		}
 		order.close();
 
-		//ÐÞ¸ÄÉÌÆ·ÐÅÏ¢
+		//ä¿®æ”¹å•†å“ä¿¡æ¯
 		s = s.substr(5);
 		fstream good("commodity.txt");
 		string lines, good_num, num, state;
@@ -471,7 +426,7 @@ void Insert(string s, char mode, string id = "*")
 
 		int ig_num = atoi(good_num.c_str()) - atoi(num.c_str());
 		if (!ig_num) {
-			state = "ÒÑÊÛÍê";
+			state = "å·²å”®å®Œ";
 			change_txt(s.substr(0, 4), "commodity.txt", state, 7);
 			good_num = "0";
 		}
@@ -480,7 +435,7 @@ void Insert(string s, char mode, string id = "*")
 		}
 		change_txt(s.substr(0, 4), "commodity.txt", good_num, 3);
 
-		//ÐÞ¸ÄÂò¼ÒºÍÂô¼ÒµÄÓà¶î
+		//ä¿®æ”¹ä¹°å®¶å’Œå–å®¶çš„ä½™é¢
 		string s_id = s.substr(s.length() - 9, 4);
 		string b_id = s.substr(s.length() - 4);
 		string price = s.substr(find_comma(s, 1) + 1, find_comma(s, 2) - find_comma(s, 1) - 1);
@@ -513,7 +468,7 @@ void Insert(string s, char mode, string id = "*")
 		change_txt(s_id, "users.txt", s_balance, 5);
 		change_txt(b_id, "users.txt", b_balance, 5);
 
-		cout << "¡ª¡ª¡ª¡ª¡ª¡ª¹ºÂò³É¹¦¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
+		cout << "â€”â€”â€”â€”â€”â€”è´­ä¹°æˆåŠŸâ€”â€”â€”â€”â€”â€”" << endl;
 	}
 }
 
@@ -521,21 +476,21 @@ void Delete(string s, char mode)
 {
 	if (mode == 's') {
 		string good_id = s.substr(s.length() - 4);
-		change_txt(good_id, "commodity.txt", "ÒÑÏÂ¼Ü", 7);
+		change_txt(good_id, "commodity.txt", "å·²ä¸‹æž¶", 7);
 
-		cout << "¡ª¡ª¡ª¡ª¡ª¡ªÏÂ¼Ü³É¹¦¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
+		cout << "â€”â€”â€”â€”â€”â€”ä¸‹æž¶æˆåŠŸâ€”â€”â€”â€”â€”â€”" << endl;
 
 	}
 	else if (mode == 'a') {
 		string id = s.substr(s.length() - 4);
 		if (id[0] == 'U') {
 			change_txt(id, "users.txt", "banned", 7);
-			cout << "¡ª¡ª¡ª¡ª¡ª¡ª·â½û³É¹¦¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
+			cout << "â€”â€”â€”â€”â€”â€”å°ç¦æˆåŠŸâ€”â€”â€”â€”â€”â€”" << endl;
 
 		}
 		else if (id[0] == 'M') {
-			change_txt(id, "commodity.txt", "ÒÑÏÂ¼Ü", 7);
-			cout << "¡ª¡ª¡ª¡ª¡ª¡ªÏÂ¼Ü³É¹¦¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
+			change_txt(id, "commodity.txt", "å·²ä¸‹æž¶", 7);
+			cout << "â€”â€”â€”â€”â€”â€”ä¸‹æž¶æˆåŠŸâ€”â€”â€”â€”â€”â€”" << endl;
 
 		}
 	}
@@ -543,12 +498,12 @@ void Delete(string s, char mode)
 
 void solve_command(string s, char mode, string id)
 {
-	//SQLÃüÁî´æ½øtxt
+	//SQLå‘½ä»¤å­˜è¿›txt
 	fstream commands("commands.txt", ios::app);
 	commands << get_time() << " " << get_time_sec() << "," << s << endl;
 	commands.close();
 
-	//ÇÐ³öÃüÁî
+	//åˆ‡å‡ºå‘½ä»¤
 	string command;
 	for (int i = 0; i < s.length(); i++) {
 		if (s[i] == ' ') {
@@ -571,6 +526,6 @@ void solve_command(string s, char mode, string id)
 		Delete(s, mode);
 	}
 
-	system("pause");
-	system("cls");
+	pause();
+	////system("cls");
 }

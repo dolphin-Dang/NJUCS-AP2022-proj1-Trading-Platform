@@ -1,9 +1,9 @@
-#ifndef _CALCULATOR_H_
+ï»¿#ifndef _CALCULATOR_H_
 #define _CALCULATOR_H_
 
 using namespace std;
 
-//¼ÆËã±í´ïÊ½
+//è®¡ç®—è¡¨è¾¾å¼
 string calculator(string s);
 
 string simplify(string s);

@@ -1,20 +1,14 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "notice.h"
 #include <fstream>
 #include <string>
 #include "print.h"
-#include <Windows.h>
+#include "helpers.h"
 
 using namespace std;
+extern string choice;
 
-extern string get_time();
-extern string get_time_sec();
-extern string cut(string s, int n, char c);
-extern void change_txt(string id, string txt, string inf, int n);
-extern bool chinese_length_check(string s, int n);
-extern string cal_cred(string id);
-
-//adminÏÂ¼ÜÉÌÆ·  ÓÃ»§¹ºÂòÉÌÆ·  ÓÃ»§ÆÀ¼ÛÂô¼Ò
+//adminä¸‹æ¶å•†å“  ç”¨æˆ·è´­ä¹°å•†å“  ç”¨æˆ·è¯„ä»·å–å®¶
 void send_notice(string u_id, string id, string receiver)
 {
 	string last_id;
@@ -37,7 +31,7 @@ void send_notice(string u_id, string id, string receiver)
 		cout << "Open failed!";
 	}
 	else {
-		//ÓÃ»§ID
+		//ç”¨æˆ·ID
 		if (last_id == "") {
 			last_id = "N001";
 		}
@@ -54,8 +48,8 @@ void send_notice(string u_id, string id, string receiver)
 	if (u_id == "admin") {
 		if (id[0] == 'M') {
 			fstream notice("notice.txt", ios::app);
-			notice << last_id << ',' << get_time() << " " << get_time_sec() << ',' << u_id << ',' << receiver << ',' << "·ñ" << ',' << \
-				"ÄúµÄÉÌÆ·£¨ID " << id << "£©ÒÑ±»¹ÜÀíÔ±ÏÂ¼Ü£¡" << endl;
+			notice << last_id << ',' << get_time() << " " << get_time_sec() << ',' << u_id << ',' << receiver << ',' << "å¦" << ',' << \
+				"æ‚¨çš„å•†å“ï¼ˆID " << id << "ï¼‰å·²è¢«ç®¡ç†å‘˜ä¸‹æ¶ï¼" << endl;
 			notice.close();
 		}
 		else if (id[0] == 'A') {
@@ -72,15 +66,15 @@ void send_notice(string u_id, string id, string receiver)
 
 
 			fstream notice("notice.txt", ios::app);
-			notice << last_id << ',' << get_time() << " " << get_time_sec() << ',' << u_id << ',' << receiver << ',' << "·ñ" << ',' << \
-				"Äú¶ÔÆÀ¼Û£¨ID "<< c_id <<")µÄÉêËß£¨ID " << id << "£©ÒÑ±»¹ÜÀíÔ±" << state << "£¡" << endl;
+			notice << last_id << ',' << get_time() << " " << get_time_sec() << ',' << u_id << ',' << receiver << ',' << "å¦" << ',' << \
+				"æ‚¨å¯¹è¯„ä»·ï¼ˆID "<< c_id <<")çš„ç”³è¯‰ï¼ˆID " << id << "ï¼‰å·²è¢«ç®¡ç†å‘˜" << state << "ï¼" << endl;
 			notice.close();
 		}
 	}
 	else {
 		if (id[0] == 'M') {
 			string name, num, g_name, lines;
-			//ÉÌÆ·ÊıÁ¿
+			//å•†å“æ•°é‡
 			fstream order("orders.txt");
 			while (getline(order, lines)) {
 				if (cut(lines, 1, ',') == id) {
@@ -88,7 +82,7 @@ void send_notice(string u_id, string id, string receiver)
 				}
 			}
 			order.close();
-			//ÓÃ»§Ãû
+			//ç”¨æˆ·å
 			fstream user("users.txt");
 			while (getline(user, lines)) {
 				if (lines.substr(0,4) == u_id) {
@@ -96,7 +90,7 @@ void send_notice(string u_id, string id, string receiver)
 				}
 			}
 			user.close();
-			//ÉÌÆ·Ãû
+			//å•†å“å
 			fstream good("commodity.txt");
 			while (getline(good, lines)) {
 				if (lines.substr(0, 4) == id) {
@@ -107,8 +101,8 @@ void send_notice(string u_id, string id, string receiver)
 
 			fstream notice("notice.txt", ios::app);
 			notice << last_id << ',' << get_time() << " " << get_time_sec() << ',' << u_id << ',' << receiver << \
-				',' << "·ñ" << ',' << "ÓÃ»§" << name << "£¨ID:" << u_id << "£©¹ºÂòÁË" \
-				<< num << "¸öÄúµÄÉÌÆ·"<< g_name << "£¨ID: " << id << "£©£¡" << endl;
+				',' << "å¦" << ',' << "ç”¨æˆ·" << name << "ï¼ˆID:" << u_id << "ï¼‰è´­ä¹°äº†" \
+				<< num << "ä¸ªæ‚¨çš„å•†å“"<< g_name << "ï¼ˆID: " << id << "ï¼‰ï¼" << endl;
 			notice.close();
 		}
 		else if (id[0] == 'T') {
@@ -123,8 +117,8 @@ void send_notice(string u_id, string id, string receiver)
 			comment.close();
 
 			fstream notice("notice.txt", ios::app);
-			notice << last_id << ',' << get_time() << " " << get_time_sec() << ',' << u_id << ',' << receiver << ',' << "·ñ" << ',' << \
-				"Âò¼Ò£¨ID:"<< u_id <<"£©ÆÀ¼ÛÁËÄúµÄ½»Ò×£¨ID " << id << "£©£º" << score << "·Ö" << endl;
+			notice << last_id << ',' << get_time() << " " << get_time_sec() << ',' << u_id << ',' << receiver << ',' << "å¦" << ',' << \
+				"ä¹°å®¶ï¼ˆID:"<< u_id <<"ï¼‰è¯„ä»·äº†æ‚¨çš„äº¤æ˜“ï¼ˆID " << id << "ï¼‰ï¼š" << score << "åˆ†" << endl;
 			notice.close();
 		}
 	}
@@ -132,7 +126,7 @@ void send_notice(string u_id, string id, string receiver)
 
 void argue(string c_id)
 {
-	//ÉêËß±àºÅ,ÉêËßÊ±¼ä,ÉêËßÕßID,ÆÀ¼Û±àºÅ,ÉêËßÀíÓÉ,´¦Àí×´Ì¬
+	//ç”³è¯‰ç¼–å·,ç”³è¯‰æ—¶é—´,ç”³è¯‰è€…ID,è¯„ä»·ç¼–å·,ç”³è¯‰ç†ç”±,å¤„ç†çŠ¶æ€
 	string comment, score;
 	fstream helper("comments.txt");
 	string lines;
@@ -144,7 +138,7 @@ void argue(string c_id)
 		}
 	}
 
-	//Éú³É±àºÅ
+	//ç”Ÿæˆç¼–å·
 	string last_id;
 	fstream argue("argue.txt");
 	if (!argue.is_open()) {
@@ -165,7 +159,7 @@ void argue(string c_id)
 		cout << "Open failed!";
 	}
 	else {
-		//ÓÃ»§ID
+		//ç”¨æˆ·ID
 		if (last_id == "") {
 			last_id = "A001";
 		}
@@ -178,45 +172,45 @@ void argue(string c_id)
 		}
 
 		cout << endl;
-		cout << "ÇëÊäÈëÉêËßÀíÓÉ£º";
+		cout << "è¯·è¾“å…¥ç”³è¯‰ç†ç”±ï¼š";
 		string reason;
 		getline(cin, reason);
 		if (reason == "") {
-			colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-			system("pause");
-			system("cls");
+			colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+			pause();
+			//system("cls");
 			argue1.close();
 			return;
 		}
 		for (int i = 0; i < reason.length(); i++) {
 			if (reason[i] == ',') {
-				colorful_print("ÉêËßÀíÓÉ²»ºÏ·¨£ºº¬ÓĞ·Ç·¨×Ö·û¡®, ¡¯£¡", 4);
-				system("pause");
-				system("cls");
+				colorful_print("ç”³è¯‰ç†ç”±ä¸åˆæ³•ï¼šå«æœ‰éæ³•å­—ç¬¦â€˜, â€™ï¼", 4);
+				pause();
+				//system("cls");
 				argue1.close();
 				return;
 			}
 		}
 		bool account_len_legal = chinese_length_check(reason, 100);
 		if (!account_len_legal) {
-			colorful_print("ÉêËßÀíÓÉ²»ºÏ·¨£º³¤¶È´óÓÚ100£¡", 4);
-			system("pause");
-			system("cls");
+			colorful_print("ç”³è¯‰ç†ç”±ä¸åˆæ³•ï¼šé•¿åº¦å¤§äº100ï¼", 4);
+			pause();
+			//system("cls");
 			argue1.close();
 			return;
 		}
 
 		argue1 << last_id << ',' << get_time() << ' ' << get_time_sec() << ',' << cut(comment, 3, ',') \
-			<< ',' << c_id << ",(" << score << ")" << reason << ',' << "Î´´¦Àí" << endl;
+			<< ',' << c_id << ",(" << score << ")" << reason << ',' << "æœªå¤„ç†" << endl;
 
-		change_txt(c_id, "comments.txt", "ÉêËßÖĞ", 6);
+		change_txt(c_id, "comments.txt", "ç”³è¯‰ä¸­", 6);
 
-		cout << "¡ª¡ª¡ª¡ª¡ª¡ªÉêËß³É¹¦¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
+		cout << "â€”â€”â€”â€”â€”â€”ç”³è¯‰æˆåŠŸâ€”â€”â€”â€”â€”â€”" << endl;
 	}
 	argue1.close();
 
-	system("pause");
-	system("cls");
+	pause();
+	//system("cls");
 }
 
 void rejudge(string a_id)
@@ -233,8 +227,8 @@ void rejudge(string a_id)
 	}
 	argue.close();
 
-	change_txt(a_id, "argue.txt", "ÒÑÍ¬Òâ", 5);
-	change_txt(c_id, "comments.txt", "ÎŞĞ§", 6);
+	change_txt(a_id, "argue.txt", "å·²åŒæ„", 5);
+	change_txt(c_id, "comments.txt", "æ— æ•ˆ", 6);
 
 	cal_cred(s_id);
 	send_notice("admin", a_id, s_id);
@@ -254,8 +248,8 @@ void reject(string a_id)
 	}
 	argue.close();
 
-	change_txt(a_id, "argue.txt", "ÒÑ²µ»Ø", 5);
-	change_txt(c_id, "comments.txt", "ÓĞĞ§", 6);
+	change_txt(a_id, "argue.txt", "å·²é©³å›", 5);
+	change_txt(c_id, "comments.txt", "æœ‰æ•ˆ", 6);
 
 	send_notice("admin", a_id, s_id);
 }

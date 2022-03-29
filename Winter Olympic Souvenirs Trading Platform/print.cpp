@@ -1,16 +1,22 @@
-#include <iostream>
-#include <Windows.h>
+ï»¿#include <iostream>
 #include "print.h"
 #include <iomanip>
 
 using namespace std;
 
-void colorful_print(string s, int color, int end)	//Èç¹ûend==1¾Í»»ĞĞ£¬Ä¬ÈÏ»»ĞĞ
+void colorful_print(string s, int color, int end)	//å¦‚æœend==1å°±æ¢è¡Œï¼Œé»˜è®¤æ¢è¡Œ
 {
-	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	/*HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | color);
 	cout << s;
-	SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | 7);
+	SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | 7);*/
+
+	if (color == 6) {
+		printf(YELLOW "%s" NONE, s.c_str());
+	}
+	else if (color == 4) {
+		printf(RED "%s" NONE, s.c_str());
+	}
 
 	if (end == 1) {
 		cout << endl;
@@ -26,7 +32,7 @@ string print_line(string c,int n)
 	return s;
 }
 
-void box_print(string s, char c)	//sÎª´òÓ¡ÄÚÈİ£¬cÎªboxµÄ¸ñÊ½
+void box_print(string s, char c)	//sä¸ºæ‰“å°å†…å®¹ï¼Œcä¸ºboxçš„æ ¼å¼
 {
 	cout << setfill(c) << setw(s.length()) << c << endl;
 	cout << s << endl;

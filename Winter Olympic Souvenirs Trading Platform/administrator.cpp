@@ -1,58 +1,53 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "administrator.h"
 #include "print.h"
-#include <Windows.h>
 #include "command.h"
 #include <fstream>
 #include <string>
 #include "notice.h"
 #include <vector>
+#include "helpers.h"
 
 using namespace std;
 
-extern int find_comma(string s, int n);
 extern string choice;
-extern bool input_check(int n);
-extern bool is_num(char c);
-extern string cut(string s, int n, char c);
 
 void Administrator:: a_log_in()
 {
 	string name, password;
 
-	cout << "ÇëÊäÈë¹ÜÀíÔ±Ãû³Æ£º";
+	cout << "è¯·è¾“å…¥ç®¡ç†å‘˜åç§°ï¼š";
 	getline(cin, name);
 	if (name == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
-	cout << "ÇëÊäÈëÃÜÂë£º";
+	cout << "è¯·è¾“å…¥å¯†ç ï¼š";
 	getline(cin, password);
 	if (password == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 
 	if (name != a_name || password != a_password) {
-		colorful_print("ÓÃ»§Ãû»òÃÜÂë´íÎó£¡", 4);
-		cout << "¡ª¡ª¡ª¡ª¡ª¡ªµÇÂ½Ê§°Ü£¬¼´½«·µ»ØÖ÷²Ëµ¥¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
-		Sleep(500);
-		system("cls");
+		colorful_print("ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯ï¼Œç™»é™†å¤±è´¥ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	
-	cout << "¡ª¡ª¡ª¡ª¡ª¡ªµÇÂ½³É¹¦¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
-	Sleep(500);
+	cout << "â€”â€”â€”â€”â€”â€”ç™»é™†æˆåŠŸâ€”â€”â€”â€”â€”â€”" << endl;
+	pause();
 
 	bool end_procedure = false;
 	while (!end_procedure) {
-		system("cls");
-		box_print("1.²é¿´ËùÓĞÉÌÆ· 2.ËÑË÷ÉÌÆ· 3.ÏÂ¼ÜÉÌÆ· 4.²é¿´ËùÓĞ¶©µ¥ 5.²é¿´ËùÓĞÓÃ»§ 6.·â½ûÓÃ»§ 7.ÉêËßÍ¨Öª 8.×¢Ïú", '=');
-		cout << "ÇëÑ¡Ôñ²Ù×÷£º";
+		////system("cls");
+		box_print("1.æŸ¥çœ‹æ‰€æœ‰å•†å“ 2.æœç´¢å•†å“ 3.ä¸‹æ¶å•†å“ 4.æŸ¥çœ‹æ‰€æœ‰è®¢å• 5.æŸ¥çœ‹æ‰€æœ‰ç”¨æˆ· 6.å°ç¦ç”¨æˆ· 7.ç”³è¯‰é€šçŸ¥ 8.æ³¨é”€", '=');
+		cout << "è¯·é€‰æ‹©æ“ä½œï¼š";
 
 		if (!input_check(8)) {
 			continue;
@@ -81,11 +76,8 @@ void Administrator:: a_log_in()
 			a_argue();
 			break;
 		case 8:
-			cout << endl;
-			cout << "¡ª¡ª¡ª¡ª¡ª¡ªÕıÔÚ×¢Ïú¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
 			end_procedure = true;
-			Sleep(500);
-			system("cls");
+			////system("cls");
 			break;
 		}
 	}
@@ -94,15 +86,15 @@ void Administrator:: a_log_in()
 void Administrator::a_search_goods()
 {
 	string command, good_name;
-	cout << "ÇëÊäÈëÉÌÆ·Ãû£º";
+	cout << "è¯·è¾“å…¥å•†å“åï¼š";
 	getline(cin, good_name);
 	if (good_name == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
-	command = "SELECT * FROM commodity WHERE Ãû³Æ CONTAINS " + good_name;
+	command = "SELECT * FROM commodity WHERE åç§° CONTAINS " + good_name;
 	solve_command(command, 'a');
 
 }
@@ -130,18 +122,18 @@ void Administrator::a_all_users()
 void Administrator::a_ban_user()
 {
 	string command, user_id;
-	cout << "ÇëÊäÈëÓÃ»§ID£º";
+	cout << "è¯·è¾“å…¥ç”¨æˆ·IDï¼š";
 	getline(cin, user_id);
 	if (user_id == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	if (user_id.length() != 4 || user_id[0] != 'U' || !is_num(user_id[1]) || !is_num(user_id[2]) || !is_num(user_id[3])) {
-		colorful_print("ÓÃ»§ID´íÎó£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("ç”¨æˆ·IDé”™è¯¯ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	command = "DELETE FROM users WHERE ID = " + user_id;
@@ -152,18 +144,18 @@ void Administrator::a_ban_user()
 void Administrator::a_remove_good()
 {
 	string command, good_id;
-	cout << "ÇëÊäÈëÉÌÆ·ID£º";
+	cout << "è¯·è¾“å…¥å•†å“IDï¼š";
 	getline(cin, good_id);
 	if (good_id == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	if (good_id.length() != 4 || good_id[0] != 'M' || !is_num(good_id[1]) || !is_num(good_id[2]) || !is_num(good_id[3])) {
-		colorful_print("ÉÌÆ·ID´íÎó£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("å•†å“IDé”™è¯¯ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 
@@ -180,9 +172,9 @@ void Administrator::a_remove_good()
 	}
 	goods.close();
 	if (!good_found) {
-		colorful_print("ÉÌÆ·²»´æÔÚ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("å•†å“ä¸å­˜åœ¨ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 
@@ -194,21 +186,21 @@ void Administrator::a_remove_good()
 
 void Administrator::a_argue()
 {
-	system("cls");
+	////system("cls");
 	fstream argue("argue.txt");
 	string lines;
 	vector<string> argues;
 	getline(argue, lines);
 	while (getline(argue, lines)) {
-		if (cut(lines, 5, ',') == "Î´´¦Àí") {
+		if (cut(lines, 5, ',') == "æœªå¤„ç†") {
 			argues.push_back(lines);
 		}
 	}
 	argue.close();
 
 	if (argues.size() == 0) {
-		box_print("ÔİÎŞÂô¼ÒÉêËß£¡", '=');
-		system("pause");
+		box_print("æš‚æ— å–å®¶ç”³è¯‰ï¼", '=');
+		pause();
 		return;
 	}
 	else {
@@ -216,9 +208,9 @@ void Administrator::a_argue()
 			int length = max(cut(argues[i],1,',').length(), cut(argues[i], 4, ',').length()) + 16;
 			for (int j = 0; j < length; j++) cout << '=';
 			cout << endl;
-			cout << "ÉêËß±àºÅ£º\t" << argues[i].substr(0, 4) << endl;
-			cout << "ÉêËßÊ±¼ä£º\t" << cut(argues[i], 1, ',') << endl;
-			cout << "ÉêËßÈËID£º\t" << cut(argues[i], 2, ',') << endl;
+			cout << "ç”³è¯‰ç¼–å·ï¼š\t" << argues[i].substr(0, 4) << endl;
+			cout << "ç”³è¯‰æ—¶é—´ï¼š\t" << cut(argues[i], 1, ',') << endl;
+			cout << "ç”³è¯‰äººIDï¼š\t" << cut(argues[i], 2, ',') << endl;
 			string reason = cut(argues[i], 4, ',');
 			int k = 0;
 			for (; k < reason.length(); k++) {
@@ -226,26 +218,26 @@ void Administrator::a_argue()
 					break;
 				}
 			}
-			cout << "ÉêËßÀíÓÉ£º\t" << reason.substr(k + 1) << endl;
-			cout << "ÆÀ·Ö£º\t\t" << reason.substr(1, k - 1) << endl;
+			cout << "ç”³è¯‰ç†ç”±ï¼š\t" << reason.substr(k + 1) << endl;
+			cout << "è¯„åˆ†ï¼š\t\t" << reason.substr(1, k - 1) << endl;
 			for (int j = 0; j < length; j++) cout << '=';
 			cout << endl;
 		}
 
-		//ÓĞÉêËß
+		//æœ‰ç”³è¯‰
 		string id;
-		cout << "ÇëÊäÈëÄã´¦ÀíµÄÉêËßID:";
+		cout << "è¯·è¾“å…¥ä½ å¤„ç†çš„ç”³è¯‰ID:";
 		getline(cin, id);
 		if (id == "") {
-			colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-			system("pause");
-			system("cls");
+			colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+			pause();
+			//system("cls");
 			return;
 		}
 		if (id.length() != 4 || id[0] != 'A' || !is_num(id[1]) || !is_num(id[2]) || !is_num(id[3])) {
-			colorful_print("ÉêËßID´íÎó£¡", 4);
-			system("pause");
-			system("cls");
+			colorful_print("ç”³è¯‰IDé”™è¯¯ï¼", 4);
+			pause();
+			////system("cls");
 			return;
 		}
 
@@ -257,12 +249,12 @@ void Administrator::a_argue()
 		}
 
 		if (!have_argue) {
-			colorful_print("ÉêËßID´íÎó£¡", 4);
-			system("pause");
-			system("cls");
+			colorful_print("ç”³è¯‰IDé”™è¯¯ï¼", 4);
+			pause();
+			////system("cls");
 			return;
 		}
-		else {//idÕıÈ·
+		else {//idæ­£ç¡®
 			int i = 0;
 			for (; i < argues.size(); i++) {
 				if (argues[i].substr(0, 4) == id) {
@@ -271,10 +263,10 @@ void Administrator::a_argue()
 			}
 
 			cout << endl;
-			box_print("ÇëÑ¡Ôñ¶Ô´ËÌõÉêËßµÄ²Ù×÷£º1.Í¬ÒâÉêËß£¬³·ÏúÆÀ¼Û 2.²µ»ØÉêËß£¬Î¬³ÖÔ­Ñù", '=');
-			cout << "ÇëÊäÈëÄãµÄÑ¡Ôñ£º";
+			box_print("è¯·é€‰æ‹©å¯¹æ­¤æ¡ç”³è¯‰çš„æ“ä½œï¼š1.åŒæ„ç”³è¯‰ï¼Œæ’¤é”€è¯„ä»· 2.é©³å›ç”³è¯‰ï¼Œç»´æŒåŸæ ·", '=');
+			cout << "è¯·è¾“å…¥ä½ çš„é€‰æ‹©ï¼š";
 
-			//¼ì²éÊäÈë×¼È·ĞÔ
+			//æ£€æŸ¥è¾“å…¥å‡†ç¡®æ€§
 			if (!input_check(2)) {
 				return;
 			}

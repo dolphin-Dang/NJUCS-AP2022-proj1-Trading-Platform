@@ -1,7 +1,6 @@
-#ifndef _ADMINISTRATOR_H_
+ï»¿#ifndef _ADMINISTRATOR_H_
 #define _ADMINISTRATOR_H_
 
-#include <iostream>
 using namespace std;
 
 class Administrator {
@@ -12,21 +11,21 @@ private:
 public:
 	Administrator()
 	{
-		a_id = "U000";			//¹ÜÀíÔ±IDÄ¬ÈÏÎªU000
-		a_name = "dolphin";		//¹ÜÀíÔ±Ãû×ÖÄ¬ÈÏÎªdolphin
-		a_password = "123456";	//¹ÜÀíÔ±ÃÜÂëÄ¬ÈÏÎª123456
+		a_id = "U000";			//ç®¡ç†å‘˜IDé»˜è®¤ä¸ºU000
+		a_name = "dolphin";		//ç®¡ç†å‘˜åå­—é»˜è®¤ä¸ºdolphin
+		a_password = "123456";	//ç®¡ç†å‘˜å¯†ç é»˜è®¤ä¸º123456
 	}
-	void a_log_in();				//¹ÜÀíÔ±µÇÂ¼
-	void a_search_goods();			//£¨¹Ø¼ü×Ö£©ËÑË÷ÉÌÆ·
-	void a_all_goods();				//²é¿´ËùÓĞÉÌÆ·£¨°üÀ¨ÒÑÏÂ¼Ü¡¢ÒÑÊÛ³ö£©
-	void a_remove_good();			//ÏÂ¼ÜÉÌÆ·
+	void a_log_in();				//ç®¡ç†å‘˜ç™»å½•
+	void a_search_goods();			//ï¼ˆå…³é”®å­—ï¼‰æœç´¢å•†å“
+	void a_all_goods();				//æŸ¥çœ‹æ‰€æœ‰å•†å“ï¼ˆåŒ…æ‹¬å·²ä¸‹æ¶ã€å·²å”®å‡ºï¼‰
+	void a_remove_good();			//ä¸‹æ¶å•†å“
 
-	void a_all_orders();			//²é¿´ËùÓĞ¶©µ¥
+	void a_all_orders();			//æŸ¥çœ‹æ‰€æœ‰è®¢å•
 
-	void a_all_users();				//²é¿´ËùÓĞÓÃ»§
-	void a_ban_user();				//·â½ûÓÃ»§
+	void a_all_users();				//æŸ¥çœ‹æ‰€æœ‰ç”¨æˆ·
+	void a_ban_user();				//å°ç¦ç”¨æˆ·
 
-	void a_argue();				//ÉêËßÏµÍ³
+	void a_argue();				//ç”³è¯‰ç³»ç»Ÿ
 };
 
 

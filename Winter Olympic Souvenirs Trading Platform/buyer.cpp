@@ -1,60 +1,17 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "buyer.h"
 #include "command.h"
 #include "print.h"
-#include <Windows.h>
 #include <string>
 #include <fstream>
 #include <iomanip>
 #include <vector>
 #include "calculator.h"
 #include "notice.h"
+#include "helpers.h"
 
 using namespace std;
-
-extern void change_txt(string id, string txt, string inf, int n);
-extern bool is_num(char c);
-extern int find_comma(string s, int n);
-extern string cut(string s, int n, char c);
-extern string get_time_sec();
-
-//¼ÆËãĞÅÓş·Ö
-string cal_cred(string id)
-{
-	string expr, ans;
-	string lines;
-	int cnt = 0;
-	fstream helper("comments.txt");
-	getline(helper, lines);
-	while (getline(helper, lines)) {
-		if (id == cut(lines, 3, ',') && cut(lines, 6, ',') != "ÎŞĞ§") {
-			cnt++;
-			expr += cut(lines, 5, ',') + "+";
-		}
-	}
-
-	if (cnt == 0) {
-		ans = "ÎŞ";
-	}
-	else {
-		helper.close();
-		expr = "(" + expr.substr(0, expr.length() - 1) + ")/" + to_string(cnt);
-		ans = calculator(expr);
-	}
-	return ans;
-}
-
-//»ñµÃ¶©µ¥ÄêÔÂÈÕĞÅÏ¢
-string get_time()
-{
-	string ret;
-	// »ùÓÚµ±Ç°ÏµÍ³µÄµ±Ç°ÈÕÆÚ/Ê±¼ä
-	time_t now = time(0);
-	tm* ltm = localtime(&now);
-	ret = to_string(1900 + ltm->tm_year) + "-" + to_string(1 + ltm->tm_mon) + "-" + to_string(ltm->tm_mday);
-
-	return ret;
-}
+extern string choice;
 
 void Buyer::b_all_goods()
 {
@@ -64,14 +21,14 @@ void Buyer::b_all_goods()
 
 void Buyer::b_search_good()
 {
-	string command = "SELECT * FROM commodity WHERE Ãû³Æ CONTAINS ";
+	string command = "SELECT * FROM commodity WHERE åç§° CONTAINS ";
 	string g_name;
-	cout << "ÇëÊäÈëÉÌÆ·Ãû£º";
+	cout << "è¯·è¾“å…¥å•†å“åï¼š";
 	getline(cin, g_name);
 	if (g_name == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	command = command + g_name;
@@ -88,18 +45,18 @@ void Buyer::b_good_detail()
 {
 	string command = "SELECT * FROM commodity WHERE ID = ";
 	string good_id;
-	cout << "ÇëÊäÈëÉÌÆ·ID£º";
+	cout << "è¯·è¾“å…¥å•†å“IDï¼š";
 	getline(cin, good_id);
 	if (good_id == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	if (good_id.length() != 4 || good_id[0] != 'M' || !is_num(good_id[1]) || !is_num(good_id[2]) || !is_num(good_id[3])) {
-		colorful_print("ÉÌÆ·ID´íÎó£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("å•†å“IDé”™è¯¯ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 
@@ -115,9 +72,9 @@ void Buyer::b_good_detail()
 	}
 	goods.close();
 	if (!good_found) {
-		colorful_print("ÉÌÆ·²»´æÔÚ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("å•†å“ä¸å­˜åœ¨ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 
@@ -125,23 +82,23 @@ void Buyer::b_good_detail()
 	solve_command(command, 'b');
 }
 
-void Buyer::b_buy()//¶©µ¥ID ÉÌÆ·ID µ¥¼Û ¸öÊı Ê±¼ä Âô¼ÒID Âò¼ÒID //ÂúÒâ¶È
+void Buyer::b_buy()//è®¢å•ID å•†å“ID å•ä»· ä¸ªæ•° æ—¶é—´ å–å®¶ID ä¹°å®¶ID //æ»¡æ„åº¦
 {
 	string command = "INSERT INTO order VALUES ";
 	string good_id, num;
 
-	cout << "ÇëÊäÈëÉÌÆ·ID£º";
+	cout << "è¯·è¾“å…¥å•†å“IDï¼š";
 	getline(cin, good_id);
 	if (good_id == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	if (good_id.length() != 4 || good_id[0] != 'M' || !is_num(good_id[1]) || !is_num(good_id[2]) || !is_num(good_id[3])) {
-		colorful_print("ÉÌÆ·ID´íÎó£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("å•†å“IDé”™è¯¯ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 
@@ -162,62 +119,62 @@ void Buyer::b_buy()//¶©µ¥ID ÉÌÆ·ID µ¥¼Û ¸öÊı Ê±¼ä Âô¼ÒID Âò¼ÒID //ÂúÒâ¶È
 	goods.close();
 	
 	if (u_id == seller_id) {
-		colorful_print("Error£º²»ÄÜ¹ºÂò×Ô¼ºµÄÉÌÆ·£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šä¸èƒ½è´­ä¹°è‡ªå·±çš„å•†å“ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 
 	if (!good_found) {
-		colorful_print("Error£ºÉÌÆ·²»´æÔÚ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šå•†å“ä¸å­˜åœ¨ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 
-	//ÉÌÆ·¸öÊıÊÇ·ñºÏ·¨
-	cout << "ÇëÊäÈëÉÌÆ·¸öÊı£º";
+	//å•†å“ä¸ªæ•°æ˜¯å¦åˆæ³•
+	cout << "è¯·è¾“å…¥å•†å“ä¸ªæ•°ï¼š";
 	getline(cin, num);
 	if (num == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	if (num == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	if (num[0] == '0') {
-		colorful_print("ÉÌÆ·¸öÊı²»ºÏ·¨£º²»ÄÜÒÔ0¿ªÍ·£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("å•†å“ä¸ªæ•°ä¸åˆæ³•ï¼šä¸èƒ½ä»¥0å¼€å¤´ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	if (num[0] == '-') {
-		colorful_print("ÉÌÆ·¸öÊı²»ºÏ·¨£º²»ÄÜÊÇ¸ºÊı£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("å•†å“ä¸ªæ•°ä¸åˆæ³•ï¼šä¸èƒ½æ˜¯è´Ÿæ•°ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	for (int i = 0; i < num.length(); i++) {
 		if (num[i] < '0' || num[i]>'9') {
-			colorful_print("ÉÌÆ·¸öÊı²»ºÏ·¨£ºÓĞ·Ç·¨×Ö·û£¡", 4);
-			system("pause");
-			system("cls");
+			colorful_print("å•†å“ä¸ªæ•°ä¸åˆæ³•ï¼šæœ‰éæ³•å­—ç¬¦ï¼", 4);
+			pause();
+			////system("cls");
 			return;
 		}
 	}
 	if (atoi(num.c_str()) > atoi(good_num.c_str())) {
-		colorful_print("ÉÌÆ·¸öÊı²»ºÏ·¨£º¿â´æ²»×ã£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("å•†å“ä¸ªæ•°ä¸åˆæ³•ï¼šåº“å­˜ä¸è¶³ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 
-	//¼ì²éÊÇ·ñÂòµÃÆğ
+	//æ£€æŸ¥æ˜¯å¦ä¹°å¾—èµ·
 	fstream check("users.txt");
 	if (!check.is_open()) {
 		cout << "Open failed!" << endl;
@@ -229,9 +186,9 @@ void Buyer::b_buy()//¶©µ¥ID ÉÌÆ·ID µ¥¼Û ¸öÊı Ê±¼ä Âô¼ÒID Âò¼ÒID //ÂúÒâ¶È
 			if (lines.substr(0, 4) == u_id) {
 				money = lines.substr(find_comma(lines, 5) + 1, find_comma(lines, 6) - find_comma(lines, 5) - 1);
 				if (atof(money.c_str()) < atoi(num.c_str()) * atof(price.c_str())) {
-					colorful_print("Óà¶î²»×ã£¡", 4);
-					system("pause");
-					system("cls");
+					colorful_print("ä½™é¢ä¸è¶³ï¼", 4);
+					pause();
+					////system("cls");
 					return;
 				}
 				break;
@@ -240,7 +197,7 @@ void Buyer::b_buy()//¶©µ¥ID ÉÌÆ·ID µ¥¼Û ¸öÊı Ê±¼ä Âô¼ÒID Âò¼ÒID //ÂúÒâ¶È
 	}
 	check.close();
 
-	//¼ì²éÉÌ¼ÒĞÅÓşÎÊÌâ
+	//æ£€æŸ¥å•†å®¶ä¿¡èª‰é—®é¢˜
 	fstream seller("users.txt");
 	string cred;
 	while (getline(seller, lines)) {
@@ -250,40 +207,40 @@ void Buyer::b_buy()//¶©µ¥ID ÉÌÆ·ID µ¥¼Û ¸öÊı Ê±¼ä Âô¼ÒID Âò¼ÒID //ÂúÒâ¶È
 		}
 	}
 	
-	if (cred == "ÎŞ" || atof(cred.c_str()) < 80) {
-		if (cred == "ÎŞ") {
-			cout << "¸ÃÉÌ¼ÒÎŞĞÅÓş·Ö¼ÇÂ¼£¨ĞÂÉÌ¼Ò£©£¬ÊÇ·ñ¼ÌĞø¹ºÂò£¿(y/n):";
+	if (cred == "æ— " || atof(cred.c_str()) < 80) {
+		if (cred == "æ— ") {
+			cout << "è¯¥å•†å®¶æ— ä¿¡èª‰åˆ†è®°å½•ï¼ˆæ–°å•†å®¶ï¼‰ï¼Œæ˜¯å¦ç»§ç»­è´­ä¹°ï¼Ÿ(y/n):";
 		}
 		else {
-			cout << "¸ÃÉÌ¼ÒĞÅÓş·Ö½ÏµÍ(" << cred << "·Ö)£¬ÊÇ·ñ¼ÌĞø¹ºÂò£¿(y/n):";
+			cout << "è¯¥å•†å®¶ä¿¡èª‰åˆ†è¾ƒä½(" << cred << "åˆ†)ï¼Œæ˜¯å¦ç»§ç»­è´­ä¹°ï¼Ÿ(y/n):";
 		}
 		string check;
 		getline(cin, check);
 		if (check == "") {
-			colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-			system("pause");
-			system("cls");
+			colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+			pause();
+			////system("cls");
 			return;
 		}
 		if (check.length() == 1 && check[0] == 'y') {
 		}
 		else if (check.length() == 1 && check[0] == 'n') {
 			cout << endl;
-			cout << "¡ª¡ª¡ª¡ª¡ª¡ªÈ¡Ïû¹ºÂò¡ª¡ª¡ª¡ª¡ª¡ª";
-			Sleep(500);
-			system("cls");
+			cout << "â€”â€”â€”â€”â€”â€”å–æ¶ˆè´­ä¹°â€”â€”â€”â€”â€”â€”";
+			pause();
+			////system("cls");
 			return;
 		}
 		else {
-			colorful_print("ÊäÈë·Ç·¨£¡", 4);
-			system("pause");
-			system("cls");
+			colorful_print("è¾“å…¥éæ³•ï¼", 4);
+			pause();
+			////system("cls");
 			return;
 		}
 	}
 
-	//´´½¨¶©µ¥
-	string last_id;//¶©µ¥ID
+	//åˆ›å»ºè®¢å•
+	string last_id;//è®¢å•ID
 	fstream orders("orders.txt");
 	if (!orders.is_open()) {
 		cout << "Open failed!";
@@ -303,7 +260,7 @@ void Buyer::b_buy()//¶©µ¥ID ÉÌÆ·ID µ¥¼Û ¸öÊı Ê±¼ä Âô¼ÒID Âò¼ÒID //ÂúÒâ¶È
 		cout << "Open failed!";
 	}
 	else {
-		//ÓÃ»§ID
+		//ç”¨æˆ·ID
 		if (last_id == "") {
 			last_id = "T001";
 		}
@@ -325,7 +282,7 @@ void Buyer::b_buy()//¶©µ¥ID ÉÌÆ·ID µ¥¼Û ¸öÊı Ê±¼ä Âô¼ÒID Âò¼ÒID //ÂúÒâ¶È
 
 void Buyer::b_judge()
 {
-	cout << "ÒÔÏÂÊÇÄúÎ´ÆÀ¼ÛµÄÀúÊ·¶©µ¥£º" << endl;
+	cout << "ä»¥ä¸‹æ˜¯æ‚¨æœªè¯„ä»·çš„å†å²è®¢å•ï¼š" << endl;
 	fstream good("orders.txt");
 	string lines, firstline;
 	bool found = false;
@@ -334,7 +291,7 @@ void Buyer::b_judge()
 	cout << endl;
 	cout << "***************************************************************************" << endl;
 	while (getline(good, lines)) {
-		if (cut(lines, 6, ',') == u_id && cut(lines, 7, ',') == "·ñ") {
+		if (cut(lines, 6, ',') == u_id && cut(lines, 7, ',') == "å¦") {
 			orders.push_back(lines);
 			if (!found) {
 				found = true;
@@ -348,31 +305,31 @@ void Buyer::b_judge()
 		}
 	}
 	if (!found) {
-		cout << "Äú»¹Ã»ÓĞÎ´ÆÀ¼ÛµÄÈÎºÎ¶©µ¥£¡" << endl;
+		cout << "æ‚¨è¿˜æ²¡æœ‰æœªè¯„ä»·çš„ä»»ä½•è®¢å•ï¼" << endl;
 	}
 	cout << "***************************************************************************" << endl;
 	cout << endl;
 	good.close();
 
 	if (!found) {
-		system("pause");
-		system("cls");
+		pause();
+		////system("cls");
 		return;
 	}
 
-	cout << "ÇëÊäÈë¶©µ¥ID£º";
+	cout << "è¯·è¾“å…¥è®¢å•IDï¼š";
 	string o_id;
 	getline(cin, o_id);
 	if (o_id == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	if (o_id.length() != 4 || o_id[0] != 'T' || !is_num(o_id[1]) || !is_num(o_id[2]) || !is_num(o_id[3])) {
-		colorful_print("¶©µ¥ID´íÎó£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("è®¢å•IDé”™è¯¯ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	int i = 0;
@@ -383,45 +340,45 @@ void Buyer::b_judge()
 	}
 
 	if (i == orders.size()) {
-		colorful_print("Error£ºÕâ²»ÊÇÄãµÄ¶©µ¥£¡", 4);
-		system("pause");
-		system("cls");
+		colorful_print("Errorï¼šè¿™ä¸æ˜¯ä½ çš„è®¢å•ï¼", 4);
+		pause();
+		////system("cls");
 		return;
 	}
 	else {
-		cout << "Çë¶Ô´Ë´ÎÏû·Ñ×ö³öÆÀ¼Û£¨Âú·Ö100£¬Ö»ÄÜÊÇÕûÊı£©£º";
+		cout << "è¯·å¯¹æ­¤æ¬¡æ¶ˆè´¹åšå‡ºè¯„ä»·ï¼ˆæ»¡åˆ†100ï¼Œåªèƒ½æ˜¯æ•´æ•°ï¼‰ï¼š";
 		string comment;
 		getline(cin, comment);
 		if (comment == "") {
-			colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-			system("pause");
-			system("cls");
+			colorful_print("Errorï¼šè¾“å…¥ä¸èƒ½ä¸ºç©ºï¼", 4);
+			pause();
+			////system("cls");
 			return;
 		}
 		if (comment.length() > 3) {
-			colorful_print("Error£ºÊäÈë²»ºÏ·¨£¡", 4);
-			system("pause");
-			system("cls");
+			colorful_print("Errorï¼šè¾“å…¥ä¸åˆæ³•ï¼", 4);
+			pause();
+			//system("cls");
 			return;
 		}
 		if (comment.length() > 2) {
 			if (comment != "100") {
-				colorful_print("Error£ºÊäÈë²»ºÏ·¨£¡", 4);
-				system("pause");
-				system("cls");
+				colorful_print("Errorï¼šè¾“å…¥ä¸åˆæ³•ï¼", 4);
+				pause();
+				//system("cls");
 				return;
 			}
 		}
 		for (int i = 0; i < comment.length(); i++) {
 			if (!is_num(comment[i])) {
-				colorful_print("Error£ºÊäÈë²»ºÏ·¨£¡", 4);
-				system("pause");
-				system("cls");
+				colorful_print("Errorï¼šè¾“å…¥ä¸åˆæ³•ï¼", 4);
+				pause();
+				//system("cls");
 				return;
 			}
 		}
 
-		//Éú³É±àºÅ
+		//ç”Ÿæˆç¼–å·
 		string last_id;
 		fstream comments("comments.txt");
 		if (!comments.is_open()) {
@@ -442,7 +399,7 @@ void Buyer::b_judge()
 			cout << "Open failed!";
 		}
 		else {
-			//ÓÃ»§ID
+			//ç”¨æˆ·ID
 			if (last_id == "") {
 				last_id = "C001";
 			}
@@ -458,25 +415,25 @@ void Buyer::b_judge()
 		}
 		comments2.close();
 
-		//ÊäÈëºÏ·¨
+		//è¾“å…¥åˆæ³•
 		string s_id = cut(orders[i], 5, ',');
 		fstream comments3("comments.txt", ios::app);
 		comments3 << get_time() << " " << get_time_sec() << "," << cut(orders[i], 6, ',') \
-			<< "," << s_id << "," << o_id << "," << comment << ",ÓĞĞ§" << endl;
+			<< "," << s_id << "," << o_id << "," << comment << ",æœ‰æ•ˆ" << endl;
 		comments3.close();
 
-		//¼ÆËã²¢ĞŞ¸ÄĞÅÓş·Ö
+		//è®¡ç®—å¹¶ä¿®æ”¹ä¿¡èª‰åˆ†
 		string ans;
 		ans = cal_cred(s_id);
 
 		change_txt(s_id, "users.txt", ans, 6);
-		change_txt(o_id, "orders.txt", "ÊÇ", 7);
+		change_txt(o_id, "orders.txt", "æ˜¯", 7);
 
 		send_notice(u_id, o_id, s_id);
 
-		cout << "¡ª¡ª¡ª¡ª¡ª¡ªÆÀ¼Û³É¹¦¡ª¡ª¡ª¡ª¡ª¡ª";
-		Sleep(500);
-		system("cls");
+		cout << "â€”â€”â€”â€”â€”â€”è¯„ä»·æˆåŠŸâ€”â€”â€”â€”â€”â€”";
+		pause();
+		//system("cls");
 		return;
 	}
 }

@@ -1,7 +1,6 @@
-#ifndef _G_A_O_
+﻿#ifndef _G_A_O_
 #define _G_A_O_
 
-#include <iostream>
 using namespace std;
 
 struct orders {

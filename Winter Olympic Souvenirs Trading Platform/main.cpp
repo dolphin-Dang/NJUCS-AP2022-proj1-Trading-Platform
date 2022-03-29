@@ -1,60 +1,36 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "goods and orders.h"
 #include "print.h"
 #include "command.h"
 #include "administrator.h"
 #include "buyer.h"
 #include "seller.h"
-#include <Windows.h>
 #include <fstream>
 #include <string>
+#include "helpers.h"
+#include "user.h"
 
 using namespace std;
 
 string choice;
-extern int u_num;
 
-//Ñ¡ÔñµÇÂ¼¡¢×¢²áµÈ
+//é€‰æ‹©ç™»å½•ã€æ³¨å†Œç­‰
 void begin_window(void)
 {
-	box_print("1.¹ÜÀíÔ±µÇÂ¼ 2.ÓÃ»§µÇÂ¼ 3.ÓÃ»§×¢²á 4.ÍË³ö³ÌĞò",'=');
+	box_print("1.ç®¡ç†å‘˜ç™»å½• 2.ç”¨æˆ·ç™»å½• 3.ç”¨æˆ·æ³¨å†Œ 4.é€€å‡ºç¨‹åº",'=');
 
 	cout << endl;
-	cout << "ÇëÑ¡Ôñ²Ù×÷£º";
+	cout << "è¯·é€‰æ‹©æ“ä½œï¼š";
 }
 
-//Óöµ½²»ºÏ·¨ÊäÈë¾Í·µ»Ø0	n´ú±í×î´óµÄÑ¡Ïî
-bool input_check(int n) {
-	getline(cin, choice);
-	if (choice == "") {
-		colorful_print("Error£ºÊäÈë²»ÄÜÎª¿Õ£¡", 4);
-		system("pause");
-		system("cls");
-		return false;
-	}
-	if (choice.length() > 1 || choice.length() == 0) {
-		colorful_print("ERROR:ÇëÊäÈëÕıÈ·µÄÑ¡Ïî£¡\n", 4);
-		system("pause");
-		system("cls");
-		return false;
-	}
-	if (choice[0] < '1' || choice[0] > '0' + n) {
-		colorful_print("ERROR:ÇëÊäÈëÕıÈ·µÄÑ¡Ïî£¡\n", 4);
-		system("pause");
-		system("cls");
-		return false;
-	}
-	else {
-		return true;
-	}
-}
+//é‡åˆ°ä¸åˆæ³•è¾“å…¥å°±è¿”å›0	nä»£è¡¨æœ€å¤§çš„é€‰é¡¹
 
 void file_check(void)
 {
 	fstream test1("users.txt");
 	if (!test1) {
 		ofstream test11("users.txt");
-		test11 << "ÓÃ»§ID,ÓÃ»§Ãû,ÃÜÂë,ÁªÏµ·½Ê½,µØÖ·,Ç®°üÓà¶î,ĞÅÓş·Ö,ÓÃ»§×´Ì¬" << endl;
+		test11 << "ç”¨æˆ·ID,ç”¨æˆ·å,å¯†ç ,è”ç³»æ–¹å¼,åœ°å€,é’±åŒ…ä½™é¢,ä¿¡èª‰åˆ†,ç”¨æˆ·çŠ¶æ€" << endl;
 		test11.close();
 	}
 	test1.close();
@@ -62,7 +38,7 @@ void file_check(void)
 	fstream test2("orders.txt");
 	if (!test2) {
 		ofstream test21("orders.txt");
-		test21 << "¶©µ¥ID,ÉÌÆ·ID,½»Ò×µ¥¼Û,ÊıÁ¿,½»Ò×Ê±¼ä,Âô¼ÒID,Âò¼ÒID,ÊÇ·ñÆÀ¼Û" << endl;
+		test21 << "è®¢å•ID,å•†å“ID,äº¤æ˜“å•ä»·,æ•°é‡,äº¤æ˜“æ—¶é—´,å–å®¶ID,ä¹°å®¶ID,æ˜¯å¦è¯„ä»·" << endl;
 		test21.close();
 	}
 	test2.close();
@@ -70,7 +46,7 @@ void file_check(void)
 	fstream test3("commodity.txt");
 	if (!test3) {
 		ofstream test31("commodity.txt");
-		test31 << "ÉÌÆ·ID,Ãû³Æ,¼Û¸ñ,ÊıÁ¿,ÃèÊö,Âô¼ÒID,ÉÏ¼ÜÊ±¼ä,ÉÌÆ·×´Ì¬" << endl;
+		test31 << "å•†å“ID,åç§°,ä»·æ ¼,æ•°é‡,æè¿°,å–å®¶ID,ä¸Šæ¶æ—¶é—´,å•†å“çŠ¶æ€" << endl;
 		test31.close();
 	}
 	test3.close();
@@ -78,7 +54,7 @@ void file_check(void)
 	fstream test4("recharge.txt");
 	if (!test4) {
 		ofstream test41("recharge.txt");
-		test41 << "ÓÃ»§ID,³äÖµÊ±¼ä,³äÖµ½ğ¶î" << endl;
+		test41 << "ç”¨æˆ·ID,å……å€¼æ—¶é—´,å……å€¼é‡‘é¢" << endl;
 		test41.close();
 	}
 	test4.close();
@@ -86,7 +62,7 @@ void file_check(void)
 	fstream test5("commands.txt");
 	if (!test5) {
 		ofstream test51("commands.txt");
-		test51 << "ÃüÁîÉú³ÉÊ±¼ä,SQLÃüÁî" << endl;
+		test51 << "å‘½ä»¤ç”Ÿæˆæ—¶é—´,SQLå‘½ä»¤" << endl;
 		test51.close();
 	}
 	test5.close();
@@ -94,7 +70,7 @@ void file_check(void)
 	fstream test6("comments.txt");
 	if (!test6) {
 		ofstream test61("comments.txt");
-		test61 << "ÆÀ¼Û±àºÅ,ÆÀ¼ÛÊ±¼ä,Âò¼ÒID,Âô¼ÒID,¶©µ¥ID,ÆÀ·Ö,ÊÇ·ñÓĞĞ§" << endl;//ÓĞĞ§ ÎŞĞ§ ÉêËßÖĞ
+		test61 << "è¯„ä»·ç¼–å·,è¯„ä»·æ—¶é—´,ä¹°å®¶ID,å–å®¶ID,è®¢å•ID,è¯„åˆ†,æ˜¯å¦æœ‰æ•ˆ" << endl;//æœ‰æ•ˆ æ— æ•ˆ ç”³è¯‰ä¸­
 		test61.close();
 	}
 	test6.close();
@@ -102,7 +78,7 @@ void file_check(void)
 	fstream test7("notice.txt");
 	if (!test7) {
 		ofstream test71("notice.txt");
-		test71 << "Í¨Öª±àºÅ,·¢ËÍÊ±¼ä,·¢ËÍÕßID,½ÓÊÕÕßID,ÊÇ·ñÒÑ¶Á,Í¨ÖªÄÚÈİ" << endl;
+		test71 << "é€šçŸ¥ç¼–å·,å‘é€æ—¶é—´,å‘é€è€…ID,æ¥æ”¶è€…ID,æ˜¯å¦å·²è¯»,é€šçŸ¥å†…å®¹" << endl;
 		test71.close();
 	}
 	test7.close();
@@ -110,7 +86,7 @@ void file_check(void)
 	fstream test8("argue.txt");
 	if (!test8) {
 		ofstream test81("argue.txt");
-		test81 << "ÉêËß±àºÅ,ÉêËßÊ±¼ä,ÉêËßÕßID,ÆÀ¼Û±àºÅ,ÉêËßÀíÓÉ,´¦Àí×´Ì¬" << endl;//Î´´¦Àí ÒÑ²µ»Ø ÒÑÍ¬Òâ
+		test81 << "ç”³è¯‰ç¼–å·,ç”³è¯‰æ—¶é—´,ç”³è¯‰è€…ID,è¯„ä»·ç¼–å·,ç”³è¯‰ç†ç”±,å¤„ç†çŠ¶æ€" << endl;//æœªå¤„ç† å·²é©³å› å·²åŒæ„
 		test81.close();
 	}
 	test8.close();
@@ -118,14 +94,13 @@ void file_check(void)
 
 int main()
 {
-	//¼ì²éÊÇ·ñ´æÔÚ×ÊÔ´ÎÄ¼ş ²»´æÔÚ¾Í´´½¨
+	//æ£€æŸ¥æ˜¯å¦å­˜åœ¨èµ„æºæ–‡ä»¶ ä¸å­˜åœ¨å°±åˆ›å»º
 	file_check();
 
 	colorful_print(print_line("*", 38), 6);
-	colorful_print("*****»¶Ó­À´µ½¶¬°Â»á¼ÍÄîÆ·½»Ò×Æ½Ì¨*****", 6);
+	colorful_print("*****æ¬¢è¿æ¥åˆ°å†¬å¥¥ä¼šçºªå¿µå“äº¤æ˜“å¹³å°*****", 6);
 	colorful_print(print_line("*", 38), 6);
 	cout << endl;
-	Sleep(500);
 
 	Administrator admin;
 
@@ -133,28 +108,25 @@ int main()
 	while (!end_procedure) {
 		begin_window();
 
-		//¼ì²éÊäÈë×¼È·ĞÔ
+		//æ£€æŸ¥è¾“å…¥å‡†ç¡®æ€§
 		if (!input_check(4)) {
 			continue;
 		}
 		
 		switch ((int)(choice[0] - '0')) {
-		case 1://¹ÜÀíÔ±µÇÂ¼
+		case 1://ç®¡ç†å‘˜ç™»å½•
 			admin.a_log_in();
 			break;
-		case 2://ÓÃ»§µÇÂ¼
+		case 2://ç”¨æˆ·ç™»å½•
 			u_log_in();
 			break;
-		case 3://ÓÃ»§×¢²á
+		case 3://ç”¨æˆ·æ³¨å†Œ
 			u_register();
 			break;
-		case 4://ÍË³ö³ÌĞò
-			system("cls");
-			cout << "¡ª¡ª¡ª¡ª¡ª¡ªÕıÔÚÍË³ö³ÌĞò¡ª¡ª¡ª¡ª¡ª¡ª" << endl;
-			Sleep(500);
-			system("cls");
+		case 4://é€€å‡ºç¨‹åº
+			////system("cls");
 			colorful_print(print_line("*", 36), 6);
-			colorful_print("*****ÄúÒÑ³É¹¦ÍË³ö£¬»¶Ó­ÏÂ´ÎÔÙÀ´*****", 6);
+			colorful_print("*****æ‚¨å·²æˆåŠŸé€€å‡ºï¼Œæ¬¢è¿ä¸‹æ¬¡å†æ¥*****", 6);
 			colorful_print(print_line("*", 36), 6);
 			end_procedure = true;
 			break;

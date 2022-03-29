@@ -1,17 +1,15 @@
-#ifndef _NOTICE_H_
+ï»¿#ifndef _NOTICE_H_
 #define _NOTICE_H_
-
-#include <iostream>
 
 using namespace std;
 
-void send_notice(string u_id, string id, string receiver);	//Ë­·¢µÄ£¬ÄÚÈİÊÇÊ²Ã´£¬·¢¸øË­£¬±¸×¢
+void send_notice(string u_id, string id, string receiver);	//è°å‘çš„ï¼Œå†…å®¹æ˜¯ä»€ä¹ˆï¼Œå‘ç»™è°ï¼Œå¤‡æ³¨
 
-void argue(string n_id);	//¿ÉÒÔÑ¡ÔñÏòadmin argue»òÕßÏòÂò¼Òargue
+void argue(string n_id);	//å¯ä»¥é€‰æ‹©å‘admin argueæˆ–è€…å‘ä¹°å®¶argue
 
-void rejudge(string n_id);	//ÓÃ»§ÖØĞÂÆÀ¼Û
+void rejudge(string n_id);	//ç”¨æˆ·é‡æ–°è¯„ä»·
 
-void reject(string n_id);	//ÓÃ»§¾Ü¾øÖØĞÂÆÀ¼Û
+void reject(string n_id);	//ç”¨æˆ·æ‹’ç»é‡æ–°è¯„ä»·
 
 
 #endif

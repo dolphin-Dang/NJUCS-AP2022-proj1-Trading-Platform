@@ -1,9 +1,7 @@
-#ifndef _USER_H_
+ï»¿#ifndef _USER_H_
 #define _USER_H_
 
 using namespace std;
-
-static int u_num = 0;
 
 struct s_User {
 	string u_id;
@@ -12,9 +10,9 @@ struct s_User {
 	string u_location;
 	string u_phone_number;
 
-	double u_money = 0;			//ÕË»§Óà¶î
-	bool u_banned = false;		//ÓÃ»§×´Ì¬
-	int credibility = 100;		//ÓÃ»§ĞÅÓş·Ö
+	double u_money = 0;			//è´¦æˆ·ä½™é¢
+	bool u_banned = false;		//ç”¨æˆ·çŠ¶æ€
+	int credibility = 100;		//ç”¨æˆ·ä¿¡èª‰åˆ†
 };
 
 class User {
@@ -29,30 +27,30 @@ public:
 	}
 	User() {};
 
-	void u_show_inf();			//ĞÅÏ¢²é¿´
-	void u_inf();				//ĞÅÏ¢¹ÜÀí
+	void u_show_inf();			//ä¿¡æ¯æŸ¥çœ‹
+	void u_inf();				//ä¿¡æ¯ç®¡ç†
 	void u_update();
 	void u_update_name();		
 	void u_update_password();
 	void u_update_address();
 	void u_update_phone();
 
-	void u_buyer_mode();		//Âò¼ÒÄ£Ê½
-	void u_seller_mode();		//Âô¼ÒÄ£Ê½
+	void u_buyer_mode();		//ä¹°å®¶æ¨¡å¼
+	void u_seller_mode();		//å–å®¶æ¨¡å¼
 
-	void u_recharge();			//³äÖµ
-	void u_notice();			//Í¨ÖªÏµÍ³
+	void u_recharge();			//å……å€¼
+	void u_notice();			//é€šçŸ¥ç³»ç»Ÿ
 
-	double u_money = 0;			//ÕË»§Óà¶î
-	bool u_banned = false;		//ÓÃ»§×´Ì¬
+	double u_money = 0;			//è´¦æˆ·ä½™é¢
+	bool u_banned = false;		//ç”¨æˆ·çŠ¶æ€
 protected:
 	string u_id;
-	int credibility = 100;		//ÓÃ»§ĞÅÓş·Ö
+	int credibility = 100;		//ç”¨æˆ·ä¿¡èª‰åˆ†
 };
 
 
-void u_log_in();			//µÇÂ¼
-void u_register();			//ÓÃ»§×¢²á
+void u_log_in();			//ç™»å½•
+void u_register();			//ç”¨æˆ·æ³¨å†Œ
 
 
 

@@ -1,4 +1,4 @@
-#ifndef _SELLER_H_
+ï»¿#ifndef _SELLER_H_
 #define _SELLER_H_
 
 #include "user.h"
@@ -8,11 +8,11 @@ public:
 	Seller(string id) {
 		u_id = id;
 	}
-	void s_my_goods();		//²é¿´×Ô¼ºµÄÉÌÆ·£¨Î´ÊÛ³ö¡¢ÒÑÊÛ³ö£©
-	void s_post_good();		//·¢²¼ĞÂÉÌÆ·
-	void s_remove_good();	//ÏÂ¼ÜÉÌÆ·£¨²»É¾³ı¼ÇÂ¼£¬×´Ì¬¸Ä³ÉÏÂ¼Ü£©
-	void s_update_good();	//ÉÌÆ·ĞÅÏ¢¸üĞÂ
-	void s_his_orders();	//²é¿´ÀúÊ·¶©µ¥
+	void s_my_goods();		//æŸ¥çœ‹è‡ªå·±çš„å•†å“ï¼ˆæœªå”®å‡ºã€å·²å”®å‡ºï¼‰
+	void s_post_good();		//å‘å¸ƒæ–°å•†å“
+	void s_remove_good();	//ä¸‹æ¶å•†å“ï¼ˆä¸åˆ é™¤è®°å½•ï¼ŒçŠ¶æ€æ”¹æˆä¸‹æ¶ï¼‰
+	void s_update_good();	//å•†å“ä¿¡æ¯æ›´æ–°
+	void s_his_orders();	//æŸ¥çœ‹å†å²è®¢å•
 };
 
 #endif

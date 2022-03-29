@@ -1,5 +1,9 @@
-#ifndef _PRINT_H_
+﻿#ifndef _PRINT_H_
 #define _PRINT_H_
+
+#define YELLOW "\e[1;33m"
+#define RED "\e[0;31m"
+#define NONE "\e[0m"
 
 using namespace std;
 

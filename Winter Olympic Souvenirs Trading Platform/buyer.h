@@ -1,4 +1,4 @@
-#ifndef _BUYER_H_
+ï»¿#ifndef _BUYER_H_
 #define _BUYER_H_
 
 #include "user.h"
@@ -8,12 +8,12 @@ public:
 	Buyer(string id) {
 		u_id = id;
 	}
-	void b_buy();				//ÂòÉÌÆ·£¬ĞÎ³É¶©µ¥
-	void b_judge();				//ÆÀ¼ÛÂô¼Ò£¬ĞÎ³ÉÆÀ¼ÛĞÅÏ¢,Ìá½»ÃèÊö(ÔİÎ´Íê³É)
-	void b_all_goods();			//²é¿´ËùÓĞÉÌÆ·ÁĞ±í
-	void b_search_good();		//ËÑË÷ÉÌÆ·
-	void b_his_orders();		//²é¿´ÀúÊ·¶©µ¥
-	void b_good_detail();		//²é¿´ÉÌÆ·ÏêÇé
+	void b_buy();				//ä¹°å•†å“ï¼Œå½¢æˆè®¢å•
+	void b_judge();				//è¯„ä»·å–å®¶ï¼Œå½¢æˆè¯„ä»·ä¿¡æ¯,æäº¤æè¿°(æš‚æœªå®Œæˆ)
+	void b_all_goods();			//æŸ¥çœ‹æ‰€æœ‰å•†å“åˆ—è¡¨
+	void b_search_good();		//æœç´¢å•†å“
+	void b_his_orders();		//æŸ¥çœ‹å†å²è®¢å•
+	void b_good_detail();		//æŸ¥çœ‹å•†å“è¯¦æƒ…
 };
 
 

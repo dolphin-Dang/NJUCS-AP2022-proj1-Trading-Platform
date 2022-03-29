@@ -149,6 +149,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="seller.cpp" />
     <ClCompile Include="user.cpp" />
+    <ClCompile Include="helpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="administrator.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="calculator.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="goods and orders.h" />
+    <ClInclude Include="helpers.h" />
     <ClInclude Include="notice.h" />
     <ClInclude Include="print.h" />
     <ClInclude Include="seller.h" />
